@@ -6,7 +6,7 @@ export function differenceBetweenMaxAndMin(arr) {
 }
 
 export function getWordsByLength(str, length) {
-  return `[${str.split(' ').filter(word => word.length > length)}]`;
+  return str.split(' ').filter(word => word.length > length);
 }
 
 export function getMissingElement(arr) {
@@ -18,11 +18,11 @@ export function solution(str, endingStr) {
 }
 
 export function averages(arr) {
-  return '[' + arr.reduce((resultArray, curr, index, array) => {
+  return arr.reduce((resultArray, curr, index, array) => {
     if (index < array.length - 1)
       resultArray.push((curr + array[index + 1]) / 2);
     return resultArray;
-  }, []) + ']';
+  }, []);
 }
 
 export function highestValue(num) {
@@ -89,7 +89,7 @@ export function removeABC(str) {
 }
 
 export function difference(arr1, arr2) {
-  return `[${[...new Set(arr1.concat(arr2).sort((a, b) => a - b).map(num => num.toString()))]}]`;
+  return [...new Set(arr1.concat(arr2).sort((a, b) => a - b).map(num => num.toString()))];
 }
 
 export function changeKeysValues(obj) {
@@ -98,7 +98,7 @@ export function changeKeysValues(obj) {
     return resultObj;
   }, {
     toString() {
-      return '\n\t\t{\n' + Object.entries(this).reduce((str, [key, value]) => key !== 'toString' ?  str + `\t\t\t${key}: ${value},\n\n` : '\n', '') + '\t\t}';
+      return Object.entries(this).reduce((str, [key, value]) => key !== 'toString' ?  str + `\t\t\t${key}: ${value},\n\n` : '\n', '');
     }
   });
 }
@@ -112,30 +112,21 @@ export function calculateDifference(obj, num) {
   return sum - num;
 }
 
-export function rotateArray(str, direction = 'left') {
+export function rotateArray(str, direction) {
   
-  if (direction === 'left') {
-    return '[' + str.split('')
-    .reduce((resultArr, _, currentIndex) => {
+  const directionLower = direction.toLowerCase();
 
-      resultArr.push(str.slice(currentIndex).concat(str.slice(0, currentIndex)));
-      // elements from current index till the end + first elements until current index
-
-      return resultArr;
-    }, []) + ']';
+  if (direction !== '' && directionLower !== 'right') {
+    return new Error('Wrong direction');
   }
 
-  return '[' + str.split('')
-    .reduce((resultArr, _, currentIndex, array) => {
-
-      const lastElementIndex = array.length - 1,
-            offset = lastElementIndex - (lastElementIndex + currentIndex); // offset from the end of the array
-
-      resultArr.push(str.slice(offset).concat(str.slice(0, offset)));
-      // elements from the end + other elements from the start until offset
-
-      return resultArr;
-    }, []) + ']';
+  return str.split('')
+    [`reduce${directionLower === 'right' ? 'Right' : ''}`]((resultArr, _, currentIndex) => { // calling reduce or reduceRight depending on provided direction
+      
+    resultArr.push(str.slice(currentIndex).concat(str.slice(0, currentIndex)));
+    
+    return resultArr;
+  }, []);
 }
 
 export function doesBrickFit(brickHeight, brickWidth, brickLength, holeWidth, holeHeight) {

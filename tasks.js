@@ -13,7 +13,7 @@ import {
   removeABC,
   rotateArray,
   solution
-} from "./tasks-functions.js";
+} from './tasks-functions.js';
 
 
 export const tasks = [
@@ -35,7 +35,7 @@ export const tasks = [
     cases: [
       {
         input: '"Hello my world lol", 3',
-        output: getWordsByLength('Hello my world lol', 3)
+        output: showAsArray(getWordsByLength('Hello my world lol', 3))
       }
     ]
   },
@@ -70,11 +70,11 @@ export const tasks = [
     cases: [
       {
         input: '[2, -2, 2, -2, 2]',
-        output: averages([2, -2, 2, -2, 2])
+        output: showAsArray(averages([2, -2, 2, -2, 2]))
       },
       {
         input: '[1, 3, 5, 1, -10]',
-        output: averages([1, 3, 5, 1, -10])
+        output: showAsArray(averages([1, 3, 5, 1, -10]))
       }
     ]
   },
@@ -143,7 +143,7 @@ export const tasks = [
     cases: [
       {
         input: '[1, 2, 3], [100, 2, 1, 10]',
-        output: difference([1, 2, 3], [100, 2, 1, 10])
+        output: showAsArray(difference([1, 2, 3], [100, 2, 1, 10]))
       }
     ]
   },
@@ -152,7 +152,7 @@ export const tasks = [
     cases: [
       {
         input: '{red: "#FF0000", green: "#00FF00", white: "#FFFFFF"}',
-        output: changeKeysValues({red: "#FF0000", green: "#00FF00", white: "#FFFFFF"})
+        output: `\n\t\t{\n${changeKeysValues({red: "#FF0000", green: "#00FF00", white: "#FFFFFF"})}\t\t}`
       }
     ]
   },
@@ -177,12 +177,19 @@ export const tasks = [
     functionName: rotateArray.name,
     cases: [
       {
-        input: '"abcd", "left"',
-        output: rotateArray("abcd", "left")
+        input: '"abcd", ""',
+        output: showAsArray(rotateArray("abcd", ''))
       },
       {
         input: '"abcd", "right"',
-        output: rotateArray("abcd", "right")
+        output: showAsArray((function() {
+
+          const array = rotateArray("abcd", "right");
+          const lastElement = array.pop();
+          array.unshift(lastElement);
+          
+          return array;
+        })())
       }
     ]
   },
@@ -204,3 +211,7 @@ export const tasks = [
     ]
   },
 ];
+
+function showAsArray(arr) {
+  return `[${arr}]`;
+}
